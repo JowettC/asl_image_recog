@@ -31,6 +31,9 @@ model = tf.keras.models.load_model('./models/model4/my_model_4')
 #instatiate flask app  
 app = Flask(__name__, template_folder='./templates')
 
+IMG_FOLDER = os.path.join('static', 'img')
+
+app.config['UPLOAD_FOLDER'] = IMG_FOLDER
 
 camera = cv2.VideoCapture(0)
 
@@ -82,8 +85,8 @@ def gen_frames():  # generate frame by frame from camera
                 
             try:
                 # define region of interest
-                roi= frame[125:375, 125:375]
-                cv2.rectangle(frame, (125,125), (375,375), (255,0,0), 5)
+                roi= frame[100:500, 100:500]
+                cv2.rectangle(frame, (100,100), (500,500), (255,0,0), 5)
 
                 roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
                 roi = cv2.resize(roi,(28,28), interpolation = cv2.INTER_AREA)              
@@ -112,7 +115,8 @@ def gen_frames():  # generate frame by frame from camera
 
 @app.route('/')
 def index():
-    return render_template('index.html' , height = "500px")
+    header_img = os.path.join(app.config['UPLOAD_FOLDER'], 'handsign.jpeg')
+    return render_template('index.html' , height = "500px", header_img=header_img)
     
 @app.route('/video_feed')
 def video_feed():
