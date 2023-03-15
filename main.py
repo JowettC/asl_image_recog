@@ -82,8 +82,8 @@ def gen_frames():  # generate frame by frame from camera
                 
             try:
                 # define region of interest
-                roi= frame[100:320, 100:320]
-                cv2.rectangle(frame, (100,100), (320,320), (255,0,0), 5)
+                roi= frame[125:375, 125:375]
+                cv2.rectangle(frame, (125,125), (375,375), (255,0,0), 5)
 
                 roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
                 roi = cv2.resize(roi,(28,28), interpolation = cv2.INTER_AREA)              
@@ -112,7 +112,7 @@ def gen_frames():  # generate frame by frame from camera
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html' , height = "500px")
     
 @app.route('/video_feed')
 def video_feed():
