@@ -18,6 +18,14 @@
 			font-family: "Figtree"
 		}
 
+		h1,
+		h2,
+		p,
+		a,
+		li {
+			color: #3b3333;
+		}
+
 		p {
 			font-size: 20px;
 		}
@@ -49,24 +57,30 @@
 
 		a {
 			text-decoration: none;
-			color:black;
+			color: black;
+		}
+
+		a:hover {
+			font-style: italic;
+			color: rgb(129, 102, 102);
 		}
 	</style>
 </head>
 
 <body>
+	<div class="d-flex justify-content-end pe-2">
+		<ul style="position:fixed;z-index:0" class="pt-2">
+			<li class="d-inline p-2"><a href="#about">About ASL</a></li>
+			<li class="d-inline p-2"><a href="#demo">Demo</a></li>
+			<li class="d-inline p-2"><a href="#team">Our Team</a></li>
+			<li class="d-inline p-2"><a href="#top">Back to Top</a></li>
+		</ul>
+	</div>
 	<div class="container-fluid p-0">
-		<div class="row">
-			<div class="parallax" style="background-image:url( {{header_img}} ); z-index:-2;">
-				<div class="d-flex justify-content-end pt-2 pe-2" style="z-index:10;">
-					<ul>
-						<li class="d-inline p-2"><a href="#about">About ASL</a></li>
-						<li class="d-inline p-2"><a href="#demo">Demo</a></li>
-						<li class="d-inline p-2"><a href="#team">Our Team</a></li>
-					  </ul>
-				</div>
+		<div class="row" id="top">
+			<div class="parallax" style="background-image:url( {{header_img}} );z-index:-1;">
 
-				<div class="w-25 ps-5 py-4" style="position:fixed;z-index:-1;">
+				<div class="w-25 ps-5 py-4" style="position:fixed;z-index:0">
 					<h1 class="mt-5 mb-4">ASL Detection by Team Dappers</h1>
 					<p class="mb-4">This is a project developed by Jolene, Regine, Rheza and Vicky under the mentorship
 						of Jowett. This project aims to detect ASL alphabets live on the webcam with relatively high
@@ -75,40 +89,84 @@
 			</div>
 		</div>
 
-		<div style="z-index:0;background-color: #f9f4f3;" class="content">
-
-			<div class="px-5 pt-4 m-0" id="about">
-				<h1>Our Project</h1>
+		<div class="content">
+			<div class="px-5 py-4 m-0" style="background-color: #f8eef0;" id="about">
+				<h2 class="mt-5">About ASL</h2>
 				<hr class="pb-0 mb-0">
-				<div class="buttons w-100 my-3">
-					<p class="d-inline pe-2">Try these!</p>
-					<form method="post" action="{{ url_for('tasks') }}" class="d-inline">
-						<input type="submit" value="Stop/Start" name="stop" class="btn btn-light mx-2" />
-						<input type="submit" value="Capture And Predict" name="click" class="btn btn-light mx-2" />
-						<input type="submit" value="Grey" name="grey" class="btn btn-light mx-2" />
-						<input type="submit" value="Negative" name="neg" class="btn btn-light mx-2" />
-					</form>
+
+				<div class="row pt-3">
+					<div class="col-6 mb-3">
+						<img src="{{asl_chart}}" class="w-100 my-3">
+					</div>
+					<div class="col-6 ">
+					<p class="my-3 px-2">ASL (also known as American Sign Language) is a form of sign language used in Deaf communities in North America. A visual language communicated by hand, body and facial movements,
+						American Sign Language has existed since the early 19th century, and is now used by over 1 million
+						people worldwide.
+					</p>
+					<p class="my-3 px-2">
+						Fingerspelling in ASL is a way of spelling words using hand movements on one hand. The fingerspelling manual alphabet is used in sign language to spell out names of people and places for which there is not a sign. It also can be used when the signer does not know the sign for a word, or to clarify a sign. 
+					</p>
+					
+					</div>
 				</div>
 			</div>
 
-			<div class="row px-5 mb-5">
+			<div id="demo" style="background-color: #f0e6e7;">
 
-				<div class="col">
-					<img src="{{ url_for('video_feed') }}" height="{{height}}">
+				<div class="px-5 pt-4 m-0">
+					<h2 class="mt-5">Live Demo</h2>
+					<hr class="pb-0 mb-0">
+					<div class="buttons w-100 my-3 py-3">
+						<p class="d-inline pe-2">Try these!</p>
+						<form method="post" action="{{ url_for('tasks') }}" class="d-inline">
+							<input type="submit" value="Stop/Start" name="stop" class="btn btn-light mx-2" />
+							<input type="submit" value="Capture And Predict" name="click" class="btn btn-light mx-2" />
+							<input type="submit" value="Grey" name="grey" class="btn btn-light mx-2" />
+							<input type="submit" value="Negative" name="neg" class="btn btn-light mx-2" />
+						</form>
+					</div>
 				</div>
 
-				<div class="col">
+				<div class="row px-5">
 
-					<h3>Instructions:</h3>
-					<ol>
-						<li>Stop/Start: Toggle between stop or start live streaming on your webcam.</li>
-						<li>Capture and Predict: Take in a capture in the feed and predict the  ASL letter.</li>
+					<div class="col mb-5">
+						<img src="{{ url_for('video_feed') }}" height="{{height}}">
+					</div>
+
+					<div class="col mb-5">
+
+						<h3>Instructions:</h3>
+						<ol>
+							<li>Stop/Start: Toggle between stop or start live streaming on your webcam.</li>
+							<li>Capture and Predict: Take in a capture in the feed and predict the ASL letter.</li>
 
 
+					</div>
 				</div>
 			</div>
 
-			<div class="row text-center p-5" style="background-color:#F8EDEC;">
+			<div class="px-5 py-4 m-0" style="background-color: #e9dddd;" id="team">
+				<h2 class="mt-5">Our Team</h2>
+				<hr class="pb-0 mb-0">
+
+				<div class="row pt-3">
+					<div class="col-6 mb-3">
+						<img src="{{asl_chart}}" class="w-100 my-3">
+					</div>
+					<div class="col-6 ">
+					<p class="my-3 px-2">ASL (also known as American Sign Language) is a form of sign language used in Deaf communities in North America. A visual language communicated by hand, body and facial movements,
+						American Sign Language has existed since the early 19th century, and is now used by over 1 million
+						people worldwide.
+					</p>
+					<p class="my-3 px-2">
+						Fingerspelling in ASL is a way of spelling words using hand movements on one hand. The fingerspelling manual alphabet is used in sign language to spell out names of people and places for which there is not a sign. It also can be used when the signer does not know the sign for a word, or to clarify a sign. 
+					</p>
+					
+					</div>
+				</div>
+			</div>
+
+			<div class="row text-center p-5" style="background-color:#dbcbcb;">
 				<small style="color:rgb(96, 96, 96)">This site and its functionalities are made and developed by Team Dappers.</small>
 			</div>
 		</div>

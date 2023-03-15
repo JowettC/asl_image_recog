@@ -93,7 +93,8 @@ def gen_frames():  # generate frame by frame from camera
 @app.route('/')
 def index():
     header_img = os.path.join(app.config['UPLOAD_FOLDER'], 'handsign.jpeg')
-    return render_template('index.html' , height = "500px", header_img=header_img)
+    asl_chart = os.path.join(app.config['UPLOAD_FOLDER'], 'asl_chart.jpeg')
+    return render_template('index.html' , height = "500px", header_img=header_img, asl_chart=asl_chart)
     
 @app.route('/video_feed')
 def video_feed():
