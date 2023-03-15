@@ -8,7 +8,7 @@ import numpy as np
 from threading import Thread
 import tensorflow as tf
 
-global capture, grey, switch, neg, face, out 
+global capture, grey, switch, neg, face, out, res 
 capture=0
 grey=0
 neg=0
@@ -37,30 +37,6 @@ app.config['UPLOAD_FOLDER'] = IMG_FOLDER
 
 camera = cv2.VideoCapture(0)
 
-# def detect_face(frame):
-#     global net
-#     (h, w) = frame.shape[:2]
-#     blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 1.0,
-#         (300, 300), (104.0, 177.0, 123.0))   
-#     net.setInput(blob)
-#     detections = net.forward()
-#     confidence = detections[0, 0, 0, 2]
-
-#     if confidence < 0.5:            
-#             return frame           
-
-#     box = detections[0, 0, 0, 3:7] * np.array([w, h, w, h])
-#     (startX, startY, endX, endY) = box.astype("int")
-#     try:
-#         frame=frame[startY:endY, startX:endX]
-#         (h, w) = frame.shape[:2]
-#         r = 480 / float(h)
-#         dim = ( int(w * r), 480)
-#         frame=cv2.resize(frame,dim)
-#     except Exception as e:
-#         pass
-#     return frame
-
 # Load the CNN model
 
 def getLetter(result):
@@ -79,6 +55,7 @@ def gen_frames():  # generate frame by frame from camera
                 frame=cv2.bitwise_not(frame)    
             if(capture):
                 capture=0
+                print("taking screenshot")
                 now = datetime.datetime.now()
                 p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":",''))])
                 cv2.imwrite(p, frame)
@@ -125,10 +102,15 @@ def video_feed():
 @app.route('/requests',methods=['POST','GET'])
 def tasks():
     global switch,camera
+    print('req is running')
     if request.method == 'POST':
-        if request.form.get('click') == 'Capture':
+        print("fk")
+        print(f"status: {request.form.get('click')}")
+        if request.form.get('click') == 'Capture And Predict':
+            print("changing capture to 1")
             global capture
             capture=1
+            
         elif  request.form.get('grey') == 'Grey':
             global grey
             grey=not grey
@@ -136,6 +118,7 @@ def tasks():
             global neg
             neg=not neg
         elif  request.form.get('stop') == 'Stop/Start':
+            print('vid start stop')
             
             if(switch==1):
                 switch=0
