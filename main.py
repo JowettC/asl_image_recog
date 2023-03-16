@@ -8,7 +8,7 @@ import numpy as np
 from threading import Thread
 import tensorflow as tf
 
-global capture, grey, switch, neg, face, out 
+global capture, grey, switch, neg, face, out, res 
 capture=0
 grey=0
 neg=0
@@ -30,33 +30,12 @@ model = tf.keras.models.load_model('./models/model4/my_model_4')
 #instatiate flask app  
 app = Flask(__name__, template_folder='./templates')
 
+IMG_FOLDER = os.path.join('static', 'img')
+
+app.config['UPLOAD_FOLDER'] = IMG_FOLDER
 
 camera = cv2.VideoCapture(0)
 object_detector = cv2.createBackgroundSubtractorMOG2()
-
-# def detect_face(frame):
-#     global net
-#     (h, w) = frame.shape[:2]
-#     blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 1.0,
-#         (300, 300), (104.0, 177.0, 123.0))   
-#     net.setInput(blob)
-#     detections = net.forward()
-#     confidence = detections[0, 0, 0, 2]
-
-#     if confidence < 0.5:            
-#             return frame           
-
-#     box = detections[0, 0, 0, 3:7] * np.array([w, h, w, h])
-#     (startX, startY, endX, endY) = box.astype("int")
-#     try:
-#         frame=frame[startY:endY, startX:endX]
-#         (h, w) = frame.shape[:2]
-#         r = 480 / float(h)
-#         dim = ( int(w * r), 480)
-#         frame=cv2.resize(frame,dim)
-#     except Exception as e:
-#         pass
-#     return frame
 
 # Load the CNN model
 
@@ -81,14 +60,15 @@ def gen_frames():  # generate frame by frame from camera
                 frame=cv2.bitwise_not(frame)    
             if(capture):
                 capture=0
+                print("taking screenshot")
                 now = datetime.datetime.now()
                 p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":",''))])
                 cv2.imwrite(p, frame)
                 
             try:
                 # define region of interest
-                roi= frame[100:320, 100:320]
-                cv2.rectangle(frame, (100,100), (320,320), (255,0,0), 5)
+                roi= frame[100:500, 100:500]
+                cv2.rectangle(frame, (100,100), (500,500), (255,0,0), 5)
 
                 roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
                 roi = cv2.resize(roi,(28,28), interpolation = cv2.INTER_AREA)              
@@ -117,7 +97,9 @@ def gen_frames():  # generate frame by frame from camera
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    header_img = os.path.join(app.config['UPLOAD_FOLDER'], 'handsign.jpeg')
+    asl_chart = os.path.join(app.config['UPLOAD_FOLDER'], 'asl_chart.jpeg')
+    return render_template('index.html' , height = "500px", header_img=header_img, asl_chart=asl_chart)
     
 @app.route('/video_feed')
 def video_feed():
@@ -126,10 +108,15 @@ def video_feed():
 @app.route('/requests',methods=['POST','GET'])
 def tasks():
     global switch,camera
+    print('req is running')
     if request.method == 'POST':
-        if request.form.get('click') == 'Capture':
+        print("fk")
+        print(f"status: {request.form.get('click')}")
+        if request.form.get('click') == 'Capture And Predict':
+            print("changing capture to 1")
             global capture
             capture=1
+            
         elif  request.form.get('grey') == 'Grey':
             global grey
             grey=not grey
@@ -137,6 +124,7 @@ def tasks():
             global neg
             neg=not neg
         elif  request.form.get('stop') == 'Stop/Start':
+            print('vid start stop')
             
             if(switch==1):
                 switch=0
