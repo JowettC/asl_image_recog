@@ -94,7 +94,15 @@ def gen_frames():  # generate frame by frame from camera
 def index():
     header_img = os.path.join(app.config['UPLOAD_FOLDER'], 'handsign.jpeg')
     asl_chart = os.path.join(app.config['UPLOAD_FOLDER'], 'asl_chart.jpeg')
-    return render_template('index.html' , height = "500px", header_img=header_img, asl_chart=asl_chart)
+
+    img1 = os.path.join(app.config['UPLOAD_FOLDER'], 'img1.jpg')
+    img2 = os.path.join(app.config['UPLOAD_FOLDER'], 'img2.jpg')
+    img3 = os.path.join(app.config['UPLOAD_FOLDER'], 'img3.jpg')
+    regenie = os.path.join(app.config['UPLOAD_FOLDER'], 'regenie.jpg')
+    vicky = os.path.join(app.config['UPLOAD_FOLDER'], 'vicky.jpg')
+    rheza = os.path.join(app.config['UPLOAD_FOLDER'], 'rheza.jpg')
+
+    return render_template('index.html' , height = "500px", header_img=header_img, asl_chart=asl_chart, img1=img1, img2=img2, img3=img3, regenie=regenie, vicky=vicky, rheza=rheza)
     
 @app.route('/video_feed')
 def video_feed():
