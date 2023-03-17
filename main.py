@@ -16,7 +16,6 @@ face=0
 # -1: initialisation, 0: stopped, 1: running 
 switch=-1
 
-
 #make shots directory to save pics
 try:
     os.mkdir('./shots')
@@ -36,6 +35,7 @@ IMG_FOLDER = os.path.join('static', 'img')
 app.config['UPLOAD_FOLDER'] = IMG_FOLDER
 
 camera = cv2.VideoCapture(0)
+object_detector = cv2.createBackgroundSubtractorMOG2()
 
 # Load the CNN model
 
@@ -47,6 +47,11 @@ def gen_frames():  # generate frame by frame from camera
     global out, capture
     while True:
         success, frame = camera.read() 
+        # mask = object_detector.apply(frame)
+        
+        cv2.imshow('frame', frame)
+        # cv2.imshow('mask', mask)
+        
         if success:
             frame = cv2.flip(frame,1)
             if(grey):
