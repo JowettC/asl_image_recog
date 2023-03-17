@@ -63,13 +63,14 @@
 		a:hover {
 			font-style: italic;
 			color: rgb(129, 102, 102);
+			text-decoration: underline;
 		}
 	</style>
 </head>
 
 <body>
-	<div class="d-flex justify-content-end pe-2 container">
-		<ul style="position:fixed;z-index:0" class="pt-2 m-4">
+	<div class="d-flex justify-content-center pe-2 container">
+		<ul style="position:fixed;z-index:0 w-100" class="pt-2 m-4">
 			<li class="d-inline p-2"><a href="#about">About ASL</a></li>
 			<li class="d-inline p-2"><a href="#demo">Demo</a></li>
 			<li class="d-inline p-2"><a href="#team">Our Team</a></li>
@@ -78,7 +79,7 @@
 	</div>
 	<div class="container-fluid p-0">
 		<div class="row container mx-auto" id="top">
-			<div class="parallax" style="background-image:url( {{header_img}} );z-index:-1;">
+			<div class="parallax d-flex justify-content-center align-items-center text-center" style="background-image:url( {{header_img}} );z-index:-1;">
 
 				<div class="ps-5 py-4 container" style="position:fixed;z-index:0">
 					<h1 class="mt-5 mb-4">ASL Detection by Team Dappers</h1>
