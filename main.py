@@ -1,5 +1,3 @@
-from flask import Flask
-import cv2
 from flask import Flask, render_template, Response, request
 import cv2
 import datetime, time
@@ -35,7 +33,7 @@ IMG_FOLDER = os.path.join('static', 'img')
 app.config['UPLOAD_FOLDER'] = IMG_FOLDER
 
 camera = cv2.VideoCapture(0)
-object_detector = cv2.createBackgroundSubtractorMOG2()
+# object_detector = cv2.createBackgroundSubtractorMOG2()
 
 # Load the CNN model
 
@@ -49,7 +47,7 @@ def gen_frames():  # generate frame by frame from camera
         success, frame = camera.read() 
         # mask = object_detector.apply(frame)
         
-        cv2.imshow('frame', frame)
+        # cv2.imshow('frame', frame)
         # cv2.imshow('mask', mask)
         
         if success:
@@ -97,7 +95,7 @@ def gen_frames():  # generate frame by frame from camera
 
 @app.route('/')
 def index():
-    header_img = os.path.join(app.config['UPLOAD_FOLDER'], 'handsign.jpeg')
+    header_img = os.path.join(app.config['UPLOAD_FOLDER'], 'header.jpeg')
     asl_chart = os.path.join(app.config['UPLOAD_FOLDER'], 'asl_chart.jpeg')
 
     img1 = os.path.join(app.config['UPLOAD_FOLDER'], 'img1.jpg')

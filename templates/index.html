@@ -23,7 +23,7 @@
 		p,
 		a,
 		li {
-			color: #3b3333;
+			color: #575353;
 		}
 
 		p {
@@ -31,9 +31,8 @@
 		}
 
 		.parallax {
-			/* The image used */
-			background-image: url('../img/handsign.jpeg');
-
+			background-image: url("{{ url_for('static', filename='/img/header.jpeg' ) }}"); 
+			z-index: -1;
 			/* Set a specific height */
 			min-height: 550px;
 
@@ -62,7 +61,7 @@
 
 		a:hover {
 			font-style: italic;
-			color: rgb(129, 102, 102);
+			color: rgb(114, 106, 106);
 			text-decoration: underline;
 		}
 	</style>
@@ -70,35 +69,33 @@
 
 <body>
 	<div class="d-flex justify-content-center pe-2 container">
-		<ul style="position:fixed;z-index:0 w-100" class="pt-2 m-4">
+		<ul style="position:fixed;z-index:0 w-100" class="m-4">
 			<li class="d-inline p-2"><a href="#about">About ASL</a></li>
 			<li class="d-inline p-2"><a href="#demo">Demo</a></li>
 			<li class="d-inline p-2"><a href="#team">Our Team</a></li>
 			<li class="d-inline p-2"><a href="#top">Back to Top</a></li>
 		</ul>
 	</div>
-	<div class="container-fluid p-0">
-		<div class="row container mx-auto" id="top">
-			<div class="parallax d-flex justify-content-center align-items-center text-center" style="background-image:url( {{header_img}} );z-index:-1;">
+	<div class="container-fluid p-0 w-100">
+		<div class="row mx-auto" id="top">
+			<div class="parallax d-flex justify-content-center align-items-center text-center">
 
-				<div class="ps-5 py-4 container" style="position:fixed;z-index:0">
+				<div class="px-5 py-4 container text-center" style="position:fixed;z-index:0">
 					<h1 class="mt-5 mb-4">ASL Detection by Team Dappers</h1>
-					<p class="mb-4">This is a project developed by Jolene, Regine, Rheza and Vicky under the mentorship
-						of Jowett. This project aims to detect ASL alphabets live on the webcam with relatively high
-						accuracy.</p>
+					<p class="mb-4 px-5 mb-5">This is a project developed by Jolene, Regine, Rheza and Vicky under the mentorship of Jowett. This project aims to detect ASL alphabets live on the webcam with relatively high accuracy.</p>
 				</div>
 			</div>
 		</div>
 
 		<div class="content">
-			<div class=" cpx-5 py-4 m-0" style="background-color: #f8eef0;" id="about">
+			<div class=" px-5 py-4 m-0" style="background-color: #ebe7e7;" id="about">
 				<div class="container">
 					<h2 class="mt-5">About ASL</h2>
 					<hr class="pb-0 mb-0">
 
 					<div class="container mx-auto row pt-3">
 						<div class="col-6 mb-5">
-							<img src="{{asl_chart}}" class="w-100 mt-3">
+							<img src="{{url_for('static', filename='/img/asl_chart.jpeg')}}" class="w-100 mt-3">
 						</div>
 						<div class="col-6 d-flex flex-column justify-content-center">
 							<p class="mt-3 px-2">ASL (also known as American Sign Language) is a form of sign language
@@ -120,7 +117,7 @@
 				</div>
 			</div>
 
-			<div id="demo" style="background-color: #f0e6e7;" class="px-5 py-4 m-0">
+			<div id="demo" style="background-color: #e2dddd;" class="px-5 py-4 m-0">
 					<div class="container">
 				<div>
 					<h2 class="mt-5">Live Demo</h2>
@@ -155,36 +152,36 @@
 			</div>
 			</div>
 
-			<div class="px-5 py-4 m-0" style="background-color: #e9dddd;" id="team">
+			<div class="px-5 py-4 m-0" style="background-color: #d5d0d0;" id="team">
 				<div class="container">
 				<h2 class="mt-5">Our Team</h2>
 				<hr class="pb-0 mb-0">
 				
 				<div class="row py-3">
 					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{img1}}" style="height:300px; width:300px; border-radius: 50%;">
+						<img src="{{url_for('static', filename='/img/img1.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
 					</div>
 					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{img2}}" style="height:300px; width:300px; border-radius: 50%;">
+						<img src="{{url_for('static', filename='/img/img2.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
 					</div>
 					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{img3}}" style="height:300px; width:300px; border-radius: 50%;">
+						<img src="{{url_for('static', filename='/img/img3.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
 					</div>
 					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{regenie}}" style="height:300px; width:300px; border-radius: 50%;">
+						<img src="{{url_for('static', filename='/img/regenie.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
 					</div>
 					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{vicky}}" style="height:300px; width:300px; border-radius: 50%;">
+						<img src="{{url_for('static', filename='/img/vicky.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
 					</div>
 					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{rheza}}" style="height:300px; width:300px; border-radius: 50%;">
+						<img src="{{url_for('static', filename='/img/rheza.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
 					</div>
 				</div>
 				</div>
 			</div>
 
-			<div class="row text-center p-5" style="background-color:#dbcbcb;">
-				<small style="color:rgb(96, 96, 96)">This site and its functionalities are made and developed by Team
+			<div class="row text-center p-5" style="background-color:#bbb4b4;">
+				<small style="color:rgb(69, 68, 67)">This site and its functionalities are made and developed by Team
 					Dappers.</small>
 			</div>
 		</div>
