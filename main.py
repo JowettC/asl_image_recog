@@ -5,8 +5,11 @@ import os, sys
 import numpy as np
 from threading import Thread
 import tensorflow as tf
+from flask_socketio import SocketIO, emit
 
-global capture, grey, switch, neg, face, out, res 
+global capture, grey, switch, neg, face, out, res, result, str_result, predict
+predict=0
+str_result = ""
 capture=0
 grey=0
 neg=0
@@ -31,24 +34,18 @@ app = Flask(__name__, template_folder='./templates')
 IMG_FOLDER = os.path.join('static', 'img')
 
 app.config['UPLOAD_FOLDER'] = IMG_FOLDER
-
+socketio = SocketIO(app)
 camera = cv2.VideoCapture(0)
-# object_detector = cv2.createBackgroundSubtractorMOG2()
-
-# Load the CNN model
+camera.release()
 
 def getLetter(result):
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i','k','L','m','n','o','p','q','r','s','t','u','v','w','x','y']
     return alphabet[int(result)]
 
 def gen_frames():  # generate frame by frame from camera
-    global out, capture
+    global out, capture, result, str_result
     while True:
         success, frame = camera.read() 
-        # mask = object_detector.apply(frame)
-        
-        # cv2.imshow('frame', frame)
-        # cv2.imshow('mask', mask)
         
         if success:
             frame = cv2.flip(frame,1)
@@ -58,6 +55,7 @@ def gen_frames():  # generate frame by frame from camera
                 frame=cv2.bitwise_not(frame)    
             if(capture):
                 capture=0
+                predict=1
                 print("taking screenshot")
                 now = datetime.datetime.now()
                 p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":",''))])
@@ -86,7 +84,12 @@ def gen_frames():  # generate frame by frame from camera
                 yield (b'--frame\r\n'
                         b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-       
+                if (predict == 1):
+                    str_result += str(getLetter(result))
+                    print('test predict')
+                    print(str_result)
+                    predict=0
+
             except Exception as e:
                 pass
         else:
@@ -105,7 +108,7 @@ def index():
     vicky = os.path.join(app.config['UPLOAD_FOLDER'], 'vicky.jpg')
     rheza = os.path.join(app.config['UPLOAD_FOLDER'], 'rheza.jpg')
 
-    return render_template('index.html' , height = "500px", header_img=header_img, asl_chart=asl_chart, img1=img1, img2=img2, img3=img3, regenie=regenie, vicky=vicky, rheza=rheza)
+    return render_template('index.html' , height = "500px", header_img=header_img, asl_chart=asl_chart, img1=img1, img2=img2, img3=img3, regenie=regenie, vicky=vicky, rheza=rheza, str_result=str_result)
     
 @app.route('/video_feed')
 def video_feed():
@@ -116,7 +119,6 @@ def tasks():
     global switch,camera
     print('req is running')
     if request.method == 'POST':
-        print("fk")
         print(f"status: {request.form.get('click')}")
         if request.form.get('click') == 'Capture And Predict':
             print("changing capture to 1")
@@ -129,8 +131,11 @@ def tasks():
         elif  request.form.get('neg') == 'Negative':
             global neg
             neg=not neg
+
         elif  request.form.get('stop') == 'Stop/Start':
             print('vid start stop')
+            print('switch is')
+            print(switch)
             
             if(switch==1):
                 switch=0
@@ -140,15 +145,15 @@ def tasks():
             else:
                 camera = cv2.VideoCapture(0)
                 switch=1
-                          
+            print('new switch')
+            print(switch)
                  
-        elif request.method=='GET':
-            return render_template('index.html')
-        return render_template('index.html')
+ 
+        return render_template('index.html', str_result=str_result)
 
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
-    
+
 camera.release()
 cv2.destroyAllWindows()     
