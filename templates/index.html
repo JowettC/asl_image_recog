@@ -31,7 +31,7 @@
 		}
 
 		.parallax {
-			background-image: url("{{ url_for('static', filename='/img/header.jpeg' ) }}"); 
+			background-image: url("{{ url_for('static', filename='/img/header.jpeg' ) }}");
 			z-index: -1;
 			/* Set a specific height */
 			min-height: 550px;
@@ -82,7 +82,9 @@
 
 				<div class="px-5 py-4 container text-center" style="position:fixed;z-index:0">
 					<h1 class="mt-5 mb-4">ASL Detection by Team Dappers</h1>
-					<p class="mb-4 px-5 mb-5">This is a project developed by Jolene, Regine, Rheza and Vicky under the mentorship of Jowett. This project aims to detect ASL alphabets live on the webcam with relatively high accuracy.</p>
+					<p class="mb-4 px-5 mb-5">This is a project developed by Jolene, Regine, Rheza and Vicky under the
+						mentorship of Jowett. This project aims to detect ASL alphabets live on the webcam with
+						relatively high accuracy.</p>
 				</div>
 			</div>
 		</div>
@@ -118,66 +120,74 @@
 			</div>
 
 			<div id="demo" style="background-color: #e2dddd;" class="px-5 py-4 m-0">
-					<div class="container">
-				<div>
-					<h2 class="mt-5">Live Demo</h2>
-					<hr class="pb-0 mb-0">
-					<div class="buttons w-100 my-3 py-3">
-						<p class="d-inline pe-2">Try these!</p>
-						<form method="post" action="{{ url_for('tasks') }}" class="d-inline">
-							<input type="submit" value="Stop/Start" name="stop" class="btn btn-light mx-2" />
-							<input type="submit" value="Capture And Predict" name="click" class="btn btn-light mx-2" />
-							<input type="submit" value="Grey" name="grey" class="btn btn-light mx-2" />
-							<input type="submit" value="Negative" name="neg" class="btn btn-light mx-2" />
-							<!-- <input type="submit" value="Predict" name="predict" class="btn btn-light mx-2" /> -->
-						</form>
-					</div>
-				</div>
-
-				<div class="row px-5">
-
-					<div class="col mb-5">
-						<img src="{{ url_for('video_feed') }}" height="{{height}}">
+				<div class="container">
+					<div>
+						<h2 class="mt-5">Live Demo</h2>
+						<hr class="pb-0 mb-0">
+						<div class="buttons w-100 my-3 py-3">
+							<p class="d-inline pe-2">Try these!</p>
+							<form method="post" action="{{ url_for('tasks') }}" class="d-inline">
+								<input type="submit" value="Stop/Start" name="stop" class="btn btn-light mx-2" />
+								<input type="submit" value="Capture And Predict" name="click"
+									class="btn btn-light mx-2" />
+								<input type="submit" value="Grey" name="grey" class="btn btn-light mx-2" />
+								<input type="submit" value="Negative" name="neg" class="btn btn-light mx-2" />
+								<!-- <input type="submit" value="Predict" name="predict" class="btn btn-light mx-2" /> -->
+							</form>
+						</div>
 					</div>
 
-					<div class="col mb-5">
+					<div class="row px-5">
 
-						<h3>Instructions:</h3>
-						<ol>
-							<li>Stop/Start: Toggle between stop or start live streaming on your webcam.</li>
-							<li>Capture and Predict: Take in a capture in the feed and predict the ASL letter.</li>
+						<div class="col mb-5">
+							<img src="{{ url_for('video_feed') }}" height="{{height}}">
+						</div>
 
+						<div class="col mb-5">
+
+							<h3>Instructions:</h3>
+							<ol>
+								<li>Stop/Start: Toggle between stop or start live streaming on your webcam.</li>
+								<li>Capture and Predict: Take in a capture in the feed and predict the ASL letter.</li>
+							</ol>
 						<h3>Output: {{ str_result }} </h3>
+
+						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 
 			<div class="px-5 py-4 m-0" style="background-color: #d5d0d0;" id="team">
 				<div class="container">
-				<h2 class="mt-5">Our Team</h2>
-				<hr class="pb-0 mb-0">
-				
-				<div class="row py-3">
-					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{url_for('static', filename='/img/img1.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
+					<h2 class="mt-5">Our Team</h2>
+					<hr class="pb-0 mb-0">
+
+					<div class="row py-3">
+						<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
+							<img src="{{url_for('static', filename='/img/img1.jpg')}}"
+								style="height:300px; width:300px; border-radius: 50%;">
+						</div>
+						<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
+							<img src="{{url_for('static', filename='/img/img2.jpg')}}"
+								style="height:300px; width:300px; border-radius: 50%;">
+						</div>
+						<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
+							<img src="{{url_for('static', filename='/img/img3.jpg')}}"
+								style="height:300px; width:300px; border-radius: 50%;">
+						</div>
+						<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
+							<img src="{{url_for('static', filename='/img/regenie.jpg')}}"
+								style="height:300px; width:300px; border-radius: 50%;">
+						</div>
+						<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
+							<img src="{{url_for('static', filename='/img/vicky.jpg')}}"
+								style="height:300px; width:300px; border-radius: 50%;">
+						</div>
+						<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
+							<img src="{{url_for('static', filename='/img/rheza.jpg')}}"
+								style="height:300px; width:300px; border-radius: 50%;">
+						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{url_for('static', filename='/img/img2.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
-					</div>
-					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{url_for('static', filename='/img/img3.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
-					</div>
-					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{url_for('static', filename='/img/regenie.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
-					</div>
-					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{url_for('static', filename='/img/vicky.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
-					</div>
-					<div class="col-lg-4 col-md-6 d-flex justify-content-center py-4">
-						<img src="{{url_for('static', filename='/img/rheza.jpg')}}" style="height:300px; width:300px; border-radius: 50%;">
-					</div>
-				</div>
 				</div>
 			</div>
 
