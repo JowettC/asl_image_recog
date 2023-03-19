@@ -6,6 +6,8 @@ import numpy as np
 from threading import Thread
 import tensorflow as tf
 from flask_socketio import SocketIO, emit
+import socketio
+import asyncio
 
 global capture, grey, switch, neg, face, out, res, result, str_result, predict
 predict=0
@@ -43,7 +45,7 @@ def getLetter(result):
     return alphabet[int(result)]
 
 def gen_frames():  # generate frame by frame from camera
-    global out, capture, result, str_result
+    global out, capture, result, str_result, predict
     while True:
         success, frame = camera.read() 
         
@@ -57,10 +59,14 @@ def gen_frames():  # generate frame by frame from camera
                 capture=0
                 predict=1
                 print("taking screenshot")
+                print("predict")
+                print(predict)
+                # reaches here, takes screensho0t but doesn't work in if predict==1
                 now = datetime.datetime.now()
                 p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":",''))])
                 cv2.imwrite(p, frame)
-                
+          #  print('outsiode predict')
+        #    print(predict)
             try:
                 # define region of interest
                 roi= frame[100:500, 100:500]
@@ -83,15 +89,29 @@ def gen_frames():  # generate frame by frame from camera
 
                 yield (b'--frame\r\n'
                         b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
                 if (predict == 1):
+                    print('predict is 1')
                     str_result += str(getLetter(result))
                     print('test predict')
                     print(str_result)
                     predict=0
+                    loop = asyncio.get_event_loop()
+                    sio = socketio.AsyncClient()
+
+                    @sio.event
+                    async def update_str(str_result):
+                        return sio.emit("result", str_result)
+
+                    async def start_server():
+                        await sio.connect('http://localhost:5000')
+                        await sio.wait()
+
+                    if __name__ == '__main__':
+                        loop.run_until_complete(start_server())                                       
 
             except Exception as e:
-                pass
+                print('exception')
+                print(e)
         else:
             pass
 
