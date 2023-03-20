@@ -169,7 +169,10 @@ def tasks():
             print('new switch')
             print(switch)
                  
- 
+        elif request.form.get('clear') == "Clear String":
+            global str_result
+            str_result = ""
+            print('flushed string')
         return render_template('index.html', str_result=str_result)
 
 
