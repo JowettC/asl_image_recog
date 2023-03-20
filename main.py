@@ -125,7 +125,7 @@ def index():
     vicky = os.path.join(app.config['UPLOAD_FOLDER'], 'vicky.jpg')
     rheza = os.path.join(app.config['UPLOAD_FOLDER'], 'rheza.jpg')
 
-    return render_template('index.html' , height = "500px", header_img=header_img, asl_chart=asl_chart, img1=img1, img2=img2, img3=img3, regenie=regenie, vicky=vicky, rheza=rheza, str_result=str_result)
+    return render_template('index.html' , height = "800px", header_img=header_img, asl_chart=asl_chart, img1=img1, img2=img2, img3=img3, regenie=regenie, vicky=vicky, rheza=rheza, str_result=str_result)
     
 @app.route('/video_feed')
 def video_feed():

@@ -20,6 +20,7 @@
 
 		h1,
 		h2,
+		h3,
 		p,
 		a,
 		li {
@@ -56,7 +57,7 @@
 
 		a {
 			text-decoration: none;
-			color: black;
+			color: #575353;
 		}
 
 		a:hover {
@@ -130,8 +131,8 @@
 								<input type="submit" value="Stop/Start" name="stop" class="btn btn-light mx-2" />
 								<input type="submit" value="Capture And Predict" name="click"
 									class="btn btn-light mx-2" />
-								<input type="submit" value="Grey" name="grey" class="btn btn-light mx-2" />
-								<input type="submit" value="Negative" name="neg" class="btn btn-light mx-2" />
+								<!-- <input type="submit" value="Grey" name="grey" class="btn btn-light mx-2" />
+								<input type="submit" value="Negative" name="neg" class="btn btn-light mx-2" /> -->
 								<input type="submit" value="Clear String" name="clear" class="btn btn-light mx-2" />
 							</form>
 						</div>
@@ -140,7 +141,7 @@
 					<div class="row px-5">
 
 						<div class="col mb-5">
-							<img src="{{ url_for('video_feed') }}" height="{{height}}">
+							<img src="{{ url_for('video_feed') }}" class="w-100">
 						</div>
 
 						<div class="col mb-5">
@@ -171,8 +172,8 @@
 								})
 							</script>
 
-							<h1>Output</h1>
-							<h3>The string is: <span id="string-value">{{ str_result }}</span></h3>
+							<h3>Camera Capture Output </h3>
+							<p>The string is: <span id="string-value">{{ str_result }}</span></p>
 
 
 							<!-- <h3>Output: {{ str_result }} </h3> -->
