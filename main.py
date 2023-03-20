@@ -63,7 +63,8 @@ def gen_frames():  # generate frame by frame from camera
                 print(predict)
                 # reaches here, takes screensho0t but doesn't work in if predict==1
                 now = datetime.datetime.now()
-                p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":",''))])
+               # p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":",''))])
+                p = os.path.sep.join(['shots', 'test.png'])
                 cv2.imwrite(p, frame)
           #  print('outsiode predict')
         #    print(predict)
