@@ -52,7 +52,10 @@ def gen_frames():  # generate frame by frame from camera
         if success:
             frame = cv2.flip(frame,1)
             if(grey):
+                #print('in grey block')
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                print('bruh')
+                #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             if(neg):
                 frame=cv2.bitwise_not(frame)    
             if(capture):
@@ -69,7 +72,10 @@ def gen_frames():  # generate frame by frame from camera
                 roi= frame[100:500, 100:500]
                 cv2.rectangle(frame, (100,100), (500,500), (255,0,0), 5)
 
-                roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+
+                # this line causes errors
+                if (not grey):
+                    roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
                 roi = cv2.resize(roi,(28,28), interpolation = cv2.INTER_AREA)              
                 roi= roi.reshape(1,28,28,1)
                 roi = roi/255
@@ -92,23 +98,24 @@ def gen_frames():  # generate frame by frame from camera
                     print('test predict')
                     print(str_result)
                     predict=0
-                    loop = asyncio.get_event_loop()
-                    sio = socketio.AsyncClient()
+                    # loop = asyncio.get_event_loop()
+                    # sio = socketio.AsyncClient()
 
-                    @sio.event
-                    async def update_str(str_result):
-                        return sio.emit("result", str_result)
+                    # @sio.event
+                    # async def update_str(str_result):
+                    #     return sio.emit("result", str_result)
 
-                    async def start_server():
-                        await sio.connect('http://localhost:5000')
-                        await sio.wait()
+                    # async def start_server():
+                    #     await sio.connect('http://localhost:5000')
+                    #     await sio.wait()
 
                     if __name__ == '__main__':
                         loop.run_until_complete(start_server())                                       
 
             except Exception as e:
-                print('exception')
-                print(e)
+                # print('exception')
+                # print(e)
+                pass
         else:
             pass
 
@@ -144,14 +151,18 @@ def tasks():
             
         elif  request.form.get('grey') == 'Grey':
             global grey
+            print('old grey')
+            print(grey)
             grey=not grey
+            print('grey new')
+            print (grey)
         elif  request.form.get('neg') == 'Negative':
             global neg
             neg=not neg
 
         elif  request.form.get('stop') == 'Stop/Start':
             print('vid start stop')
-            
+
             if(switch==1):
                 switch=0
                 camera.release()
