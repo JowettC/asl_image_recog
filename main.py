@@ -26,8 +26,6 @@ except OSError as error:
     pass
 
 # Load pretrained model    
-
-#net = cv2.dnn.readNetFromCaffe('./models/deploy.prototxt.txt', './models/res10_300x300_ssd_iter_140000.caffemodel')
 model = tf.keras.models.load_model('./models/model4/my_model_4')
 
 #instatiate flask app  
@@ -40,6 +38,8 @@ socketio = SocketIO(app)
 camera = cv2.VideoCapture(0)
 camera.release()
 
+
+# to convert index to letter
 def getLetter(result):
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i','k','L','m','n','o','p','q','r','s','t','u','v','w','x','y']
     return alphabet[int(result)]
@@ -61,13 +61,9 @@ def gen_frames():  # generate frame by frame from camera
                 print("taking screenshot")
                 print("predict")
                 print(predict)
-                # reaches here, takes screensho0t but doesn't work in if predict==1
-                now = datetime.datetime.now()
-               # p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":",''))])
+                # sets path & takes screenshot
                 p = os.path.sep.join(['shots', 'test.png'])
                 cv2.imwrite(p, frame)
-          #  print('outsiode predict')
-        #    print(predict)
             try:
                 # define region of interest
                 roi= frame[100:500, 100:500]
@@ -155,8 +151,6 @@ def tasks():
 
         elif  request.form.get('stop') == 'Stop/Start':
             print('vid start stop')
-            print('switch is')
-            print(switch)
             
             if(switch==1):
                 switch=0
@@ -166,8 +160,6 @@ def tasks():
             else:
                 camera = cv2.VideoCapture(0)
                 switch=1
-            print('new switch')
-            print(switch)
                  
         elif request.form.get('clear') == "Clear String":
             global str_result
