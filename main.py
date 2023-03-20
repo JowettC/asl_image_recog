@@ -69,8 +69,8 @@ def gen_frames():  # generate frame by frame from camera
                 cv2.imwrite(p, frame)
             try:
                 # define region of interest
-                roi= frame[100:500, 100:500]
-                cv2.rectangle(frame, (100,100), (500,500), (255,0,0), 5)
+                roi= frame[100:400, 100:400]
+                cv2.rectangle(frame, (100,100), (400,400), (255,0,0), 5)
 
 
                 # this line causes errors
@@ -84,7 +84,7 @@ def gen_frames():  # generate frame by frame from camera
                 model_classes = np.argmax(model_predict, axis=1)
                 result = str(model_classes[0])
 
-                cv2.putText(frame, getLetter(result), (300,100), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,0), 2)
+                cv2.putText(frame, getLetter(result), (250,100), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,0), 2)
 
                 # Convert the frame to a JPEG image
                 ret, buffer = cv2.imencode('.jpg', frame)
