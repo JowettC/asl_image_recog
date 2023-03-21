@@ -52,9 +52,7 @@ def gen_frames():  # generate frame by frame from camera
         if success:
             frame = cv2.flip(frame,1)
             if(grey):
-                #print('in grey block')
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                print('bruh')
                 #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             if(neg):
                 frame=cv2.bitwise_not(frame)    
@@ -151,18 +149,13 @@ def tasks():
             
         elif  request.form.get('grey') == 'Grey':
             global grey
-            print('old grey')
-            print(grey)
             grey=not grey
-            print('grey new')
-            print (grey)
+
         elif  request.form.get('neg') == 'Negative':
             global neg
             neg=not neg
 
         elif  request.form.get('stop') == 'Stop/Start':
-            print('vid start stop')
-
             if(switch==1):
                 switch=0
                 camera.release()
@@ -175,7 +168,6 @@ def tasks():
         elif request.form.get('clear') == "Clear String":
             global str_result
             str_result = ""
-            print('flushed string')
         return render_template('index.html', str_result=str_result)
 
 
