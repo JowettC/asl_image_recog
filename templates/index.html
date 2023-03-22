@@ -60,6 +60,11 @@
 			color: #575353;
 		}
 
+		.demo {
+			box-shadow: 0 5px 20px #3d3d3d42;
+			z-index: 1;
+		}
+
 		a:hover {
 			font-style: italic;
 			color: rgb(114, 106, 106);
@@ -76,6 +81,67 @@
 			<li class="d-inline p-2"><a href="#team">Our Team</a></li>
 			<li class="d-inline p-2"><a href="#top">Back to Top</a></li>
 		</ul>
+	</div>
+	<div id="demo" style="background-color: #e2dddd;box-shadow: 20px #3d3d3d5e;" class="px-5 py-4 m-0 demo">
+		<div class="container">
+			<div>
+				<h2 class="mt-5">Live Demo</h2>
+				<hr class="pb-0 mb-0">
+				<div class="buttons w-100 my-3 py-3">
+					<p class="d-inline pe-2">Try these!</p>
+					<form method="post" action="{{ url_for('tasks') }}" class="d-inline">
+						<input type="submit" value="Stop/Start" name="stop" class="btn btn-light mx-2" />
+						<input type="submit" value="Capture And Predict" name="click" class="btn btn-light mx-2" />
+						<input type="submit" value="Grey" name="grey" class="btn btn-light mx-2" />
+						<input type="submit" value="Negative" name="neg" class="btn btn-light mx-2" />
+						<input type="submit" value="Clear String" name="clear" class="btn btn-light mx-2" />
+					</form>
+				</div>
+			</div>
+
+			<div class="row px-5">
+
+				<div class="col mb-5">
+					<img src="{{ url_for('video_feed') }}" class="w-100">
+				</div>
+
+				<div class="col mb-5">
+
+					<h3>Instructions:</h3>
+					<ol>
+						<li>Stop/Start: Toggle between stop or start live streaming on your webcam.</li>
+						<li>Capture and Predict: Take in a capture in the feed and predict the ASL letter.</li>
+					</ol>
+
+
+					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+					<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"
+						integrity="sha512-g31jm8tRPSjKvSg2xuTtTsyFYs4z3q4h/S16+gVtA4t8PSRufjHvQFulxgZbxTz4sWJfH7sxsGnsozHy7Zml3A=="
+						crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+					<script>
+						$(document).ready(function () {
+							// var socket = io.connect('http://' + document.domain + ':' + location.port);
+							// socket.on('connect', function () {
+							// 	console.log('Connected to SocketIO server');
+							// });
+							// var socket = io.connect();
+
+							socket.on('result', (str_result) => {
+								result = str_result
+								console.log(result)
+							});
+						})
+					</script>
+
+					<h3>Camera Capture Output </h3>
+					<p>The string is: <span id="string-value">{{ str_result }}</span></p>
+
+
+					<!-- <h3>Output: {{ str_result }} </h3> -->
+
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="container-fluid p-0 w-100">
 		<div class="row mx-auto" id="top">
@@ -120,7 +186,7 @@
 				</div>
 			</div>
 
-			<div id="demo" style="background-color: #e2dddd;" class="px-5 py-4 m-0">
+			<!-- <div id="demo" style="background-color: #e2dddd;" class="px-5 py-4 m-0">
 				<div class="container">
 					<div>
 						<h2 class="mt-5">Live Demo</h2>
@@ -175,13 +241,10 @@
 							<h3>Camera Capture Output </h3>
 							<p>The string is: <span id="string-value">{{ str_result }}</span></p>
 
-
-							<!-- <h3>Output: {{ str_result }} </h3> -->
-
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="px-5 py-4 m-0" style="background-color: #d5d0d0;" id="team">
 				<div class="container">
